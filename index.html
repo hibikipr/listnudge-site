@@ -7,7 +7,7 @@
 <meta name="description" content="ListNudge is a shared grocery list for iPhone and iPad. Add items from anywhere, watch the list sync in real time with your household, and get a gentle nudge when you're near the store. No login required.">
 <meta property="og:title" content="ListNudge — One list. Everyone's on it.">
 <meta property="og:description" content="Shared grocery lists that sync in real time, plus a gentle nudge when you're near the store. Private by design — no login, no ads.">
-<meta property="og:image" content="https://listnudge.townsville.cc/assets/lists-home.png">
+<meta property="og:image" content="https://listnudge.townsville.cc/assets/lists-home.jpg">
 <link rel="icon" type="image/png" href="assets/app-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,12 +40,13 @@
   .hero-copy .tagline { color: var(--panel-accent); font-weight: 700; font-size: clamp(17px, 2.4vw, 21px); margin-top: 10px; }
   .hero-copy p.sub { color: var(--panel-sub); font-size: 17px; line-height: 1.6; margin-top: 16px; max-width: 460px; }
   .badge-row { margin-top: 30px; display: flex; gap: 12px; flex-wrap: wrap; }
+  /* Not a link — there's nowhere real to send someone yet. A pill that promised a
+     destination it couldn't deliver (it used to jump to the footer's email) was worse
+     than a plain status badge with no affordance to fake. */
   .store-badge {
     display: inline-block; padding: 13px 26px; border-radius: 999px;
-    background: var(--accent); color: #fff; font-weight: 700; font-size: 16px; text-decoration: none;
-    transition: transform .18s var(--ease-out);
+    background: var(--accent); color: #fff; font-weight: 700; font-size: 16px;
   }
-  .store-badge:hover { transform: translateY(-2px); }
   .pill-dark {
     display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 999px; font-size: 14px; font-weight: 600;
     background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.14); color: var(--panel-sub);
@@ -133,13 +134,13 @@
         <p class="tagline">Shared grocery lists, with a nudge when you're at the store.</p>
         <p class="sub">Add milk from the couch. Whoever gets to the store first checks it off — everyone else finds out instantly. Real-time sync via iCloud, no login required.</p>
         <div class="badge-row">
-          <a class="store-badge" href="#support">Coming soon to the App Store</a>
+          <span class="store-badge">Coming soon to the App Store</span>
           <span class="pill-dark">iPhone &amp; iPad</span>
         </div>
       </div>
       <div class="hero-shot">
         <div class="float-card">
-          <img src="assets/lists-home.png" alt="ListNudge's Lists screen, showing shared and personal grocery lists" width="285" height="620" fetchpriority="high">
+          <img src="assets/lists-home.jpg" alt="ListNudge's Lists screen, showing shared and personal grocery lists" width="600" height="1304" fetchpriority="high">
         </div>
       </div>
     </div>
@@ -156,7 +157,7 @@
         <h3>Built for the whole household</h3>
         <p>Share any list with the people you shop with. See who added what and who checked it off — items sort themselves into Produce, Dairy, Bakery, Pantry, Frozen, and Household automatically.</p>
         <div class="shot-frame">
-          <img src="assets/list-detail.png" alt="A shared grocery list, categorized into sections, with two household members' avatars and attribution like &quot;Kai got it&quot;" width="285" height="620" loading="lazy" decoding="async">
+          <img src="assets/list-detail.jpg" alt="A shared grocery list, categorized into sections, with two household members' avatars and attribution like &quot;Kai got it&quot;" width="600" height="1304" loading="lazy" decoding="async">
         </div>
       </div>
       <div class="pillar">
@@ -164,7 +165,7 @@
         <h3>Store nudges, not just reminders</h3>
         <p>ListNudge watches the stores you actually shop at and nudges you the moment you're nearby — only if your list has something on it. Quiet hours keep a late errand from buzzing your phone.</p>
         <div class="shot-frame">
-          <img src="assets/nearby.png" alt="The Nearby tab, showing a map and a list of watched and nearby stores" width="285" height="620" loading="lazy" decoding="async">
+          <img src="assets/nearby.jpg" alt="The Nearby tab, showing a map and a list of watched and nearby stores" width="600" height="1304" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -178,7 +179,7 @@
 
 </main>
 
-<footer id="support">
+<footer>
   <p><strong style="color: var(--ink);">Support</strong></p>
   <p>Questions or ideas? Email <a href="mailto:support@townsville.cc">support@townsville.cc</a></p>
   <p><a href="privacy.html">Privacy Policy</a></p>
