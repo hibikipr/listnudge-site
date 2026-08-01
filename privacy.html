@@ -9,25 +9,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <style>
-  :root {
-    --bg: #F7F2E9; --card: #FFFFFF; --line: #EDE5D4;
-    --ink: #2A2723; --sub: #7A7365;
-    --accent: #3E7C46; --accent-deep: #2E6236;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1B1A16; --card: #262420; --line: #35322A;
-      --ink: #EFEAE0; --sub: #B0A896;
-    }
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: "Karla", system-ui, sans-serif; color: var(--ink);
-    background: var(--bg); min-height: 100vh;
-  }
-  h1, h2 { font-family: "Bricolage Grotesque", system-ui, sans-serif; }
-  main { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+  /* Tokens, reset, base type and focus live in styles.css. */
+  body { min-height: 100vh; }
+  /* 680px keeps the measure near 70ch at this size; 720px ran past 75ch. */
+  main { max-width: 680px; margin: 0 auto; padding: 56px 24px 80px; }
   a { color: var(--accent-deep); }
   h1 { font-size: 38px; font-weight: 800; }
   .updated { color: var(--sub); margin-top: 8px; font-size: 15px; }
@@ -36,10 +23,14 @@
   ul { padding-left: 24px; }
   .tldr {
     margin-top: 26px; padding: 22px 26px; border-radius: 20px;
-    background: rgba(62, 124, 70, 0.08); border: 2px solid rgba(62, 124, 70, 0.3);
+    background: var(--accent-wash); border: 2px solid rgba(62, 124, 70, 0.3);
   }
   .tldr strong { color: var(--accent-deep); }
-  .back { display: inline-block; margin-bottom: 26px; text-decoration: none; font-weight: 600; }
+  .back {
+    display: inline-block; margin-bottom: 18px; padding: 8px 10px;
+    text-decoration: none; font-weight: 600;
+  }
+  .back:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
