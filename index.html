@@ -64,6 +64,14 @@
   .section-head h2 { font-size: clamp(28px, 4vw, 36px); font-weight: 800; }
   .section-head p { color: var(--sub); margin-top: 12px; font-size: 17px; }
 
+  /* ---- Promo video ---- */
+  section.promo { padding: var(--space-2xl) 0 0; }
+  .promo-frame {
+    margin: var(--space-lg) auto 0; max-width: 880px; border-radius: 26px; overflow: hidden;
+    background: var(--panel-bg); border: 1.5px solid var(--line); box-shadow: 0 24px 60px rgba(42,39,35,.18);
+  }
+  .promo-frame video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+
   .pillar-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md);
     margin-top: var(--space-xl);
@@ -140,6 +148,19 @@
       </div>
     </div>
   </div>
+
+  <section class="promo wrap" aria-labelledby="promo-heading">
+    <div class="section-head">
+      <h2 id="promo-heading">See it in 30 seconds</h2>
+      <p>A quick look at how ListNudge works.</p>
+    </div>
+    <div class="promo-frame">
+      <video controls playsinline preload="none" poster="assets/promo-poster.webp" width="1920" height="1080" aria-label="ListNudge promo video: shared lists, real-time sync, store nudges and Siri">
+        <source src="assets/promo.mp4" type="video/mp4">
+        <a href="assets/promo.mp4">Watch the ListNudge promo video</a>
+      </video>
+    </div>
+  </section>
 
   <section class="pillars wrap" aria-labelledby="pillars-heading">
     <div class="section-head">
