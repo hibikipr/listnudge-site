@@ -44,18 +44,168 @@
     display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 999px; font-size: 14px; font-weight: 600;
     background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.14); color: var(--panel-sub);
   }
-  .hero-shot { position: relative; padding-top: var(--space-2xl); min-width: 0; }
-  .hero-shot .float-card {
-    background: var(--card); border-radius: 28px; padding: 14px;
-    box-shadow: 0 40px 80px rgba(0,0,0,.45), 0 4px 16px rgba(0,0,0,.3);
-    max-width: 300px; margin: 0 auto;
-  }
-  .hero-shot img { width: 100%; height: auto; display: block; border-radius: 18px; }
+  .hero-shot { position: relative; padding: var(--space-lg) 0 var(--space-lg); min-width: 0; }
 
   @media (max-width: 760px) {
     .hero-inner { grid-template-columns: 1fr; min-height: 0; padding-top: 32px; }
     .hero-copy { padding: var(--space-lg) 0; text-align: left; }
     .hero-shot { padding-top: 0; padding-bottom: var(--space-xl); }
+  }
+
+  /* ---- Live sync demo: two playable phones in the hero ----
+     The phones render the app's own cream UI, so their colors are fixed (not theme tokens),
+     exactly like the screenshots they replace. Everything inside a phone is sized in em off a
+     container-relative font size, so the whole screen scales as one piece down to phone widths. */
+  .sync-demo {
+    --ph-bg: #F5F0E6; --ph-ink: #2A2723; --ph-sub: #8E8778; --ph-line: #E4DBC9;
+    --ph-green: #3E7C46; --ph-wash: #E3EBDD; --ph-kai: #C0812F;
+    position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+    max-width: 470px; margin: 0 auto; align-items: start;
+  }
+  .phone { container-type: inline-size; margin: 0; min-width: 0; }
+  .phone[data-phone="kai"] { margin-top: 44px; }
+  .phone-tag {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+    font-size: 13px; font-weight: 700; color: var(--panel-sub); white-space: nowrap;
+  }
+  .screen {
+    position: relative; overflow: hidden; display: flex; flex-direction: column;
+    aspect-ratio: 9 / 18.5; font-size: 6.4cqi;
+    background: var(--ph-bg); color: var(--ph-ink); border-radius: 13cqi;
+    box-shadow: 0 0 0 5px #0F0E0C, 0 0 0 6px rgba(255,255,255,.12), 0 34px 70px rgba(0,0,0,.5);
+  }
+  .status { padding: .9em 1.6em .3em; font-size: .75em; font-weight: 700; }
+  .lh { padding: .4em 1.1em .7em; border-bottom: 1px solid var(--ph-line); }
+  .lh-top { display: flex; justify-content: space-between; align-items: center; }
+  .lh-back { color: var(--ph-green); font-weight: 700; font-size: .8em; }
+  .avs { display: flex; }
+  .avs .av + .av { margin-left: -.5em; }
+  .av {
+    display: inline-grid; place-items: center; flex: none; width: 2.2em; height: 2.2em; border-radius: 50%;
+    font-size: .62em; font-weight: 700; color: #fff; background: var(--ph-green);
+    box-shadow: 0 0 0 .18em var(--ph-bg);
+  }
+  .av-k { background: var(--ph-kai); }
+  .phone-tag .av { font-size: 11px; box-shadow: none; }
+  .lh-title {
+    display: flex; align-items: center; gap: .45em; margin-top: .45em;
+    font-size: 1.12em; font-weight: 800; line-height: 1.1; color: var(--ph-ink);
+  }
+  .lh-title .ic {
+    display: grid; place-items: center; flex: none; width: 1.6em; height: 1.6em; border-radius: .4em;
+    background: var(--ph-wash); color: var(--ph-green);
+  }
+  .lh-title svg { width: .95em; height: .95em; }
+  .lh-count { margin-top: .5em; font-size: .72em; color: var(--ph-sub); }
+
+  .items { list-style: none; flex: 1; overflow-y: auto; scrollbar-width: none; padding-bottom: .6em; }
+  .items::-webkit-scrollbar { display: none; }
+  .cat {
+    padding: 1.1em 1.6em .25em; font-size: .6em; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ph-sub);
+  }
+  .row {
+    display: flex; align-items: center; gap: .65em; width: 100%; padding: .38em 1.1em;
+    background: none; border: 0; font: inherit; color: inherit; text-align: left; cursor: pointer;
+    transition: background-color .2s;
+  }
+  .row:hover { background: rgba(62,124,70,.06); }
+  .row:focus-visible { outline-color: var(--ph-green); outline-offset: -3px; }
+  .tick {
+    position: relative; flex: none; width: 1.35em; height: 1.35em; border-radius: 50%;
+    border: .13em solid #D6CCB8; transition: background-color .25s var(--ease-out), border-color .25s;
+  }
+  .tick::after {
+    content: ""; position: absolute; left: 32%; top: 14%; width: 28%; height: 52%;
+    border: solid #fff; border-width: 0 .14em .14em 0; transform: rotate(45deg) scale(0);
+    transition: transform .3s var(--ease-out);
+  }
+  .done .tick { background: var(--ph-green); border-color: var(--ph-green); }
+  .done .tick::after { transform: rotate(45deg) scale(1); }
+  .txt { display: flex; flex-direction: column; min-width: 0; }
+  .nm { font-size: .9em; font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; }
+  .done .nm { text-decoration: line-through; color: var(--ph-sub); }
+  .qty {
+    display: inline-block; margin-left: .4em; padding: .05em .4em; border-radius: .4em;
+    font-size: .75em; font-weight: 700; color: var(--ph-sub); background: #ECE4D3; vertical-align: .1em;
+  }
+  .meta { font-size: .68em; color: var(--ph-sub); }
+  .flash .row { animation: flash 1.8s var(--ease-out); }
+  @keyframes flash { 0%, 35% { background: rgba(62,124,70,.2); } 100% { background: transparent; } }
+
+  .add { display: flex; gap: .4em; padding: .55em .7em 1em; border-top: 1px solid var(--ph-line); }
+  .field {
+    position: relative; flex: 1; min-width: 0; height: 2.2em; border-radius: .7em;
+    background: #FBF8F1; border: 1px solid var(--ph-line);
+  }
+  .field.typing, .field:focus-within { border-color: var(--ph-green); box-shadow: 0 0 0 2px rgba(62,124,70,.25); }
+  /* iOS zooms the page into any input under 16px. The input stays 16px and is scaled down
+     to the phone's type size instead; --s is set from script as the screen resizes. */
+  .field input {
+    --s: .5; position: absolute; left: 0; top: 0;
+    width: calc(100% / var(--s)); height: calc(100% / var(--s)); transform: scale(var(--s)); transform-origin: 0 0;
+    padding: 0 .75em; border: 0; background: none; outline: none;
+    font: 500 16px "Karla", system-ui, sans-serif; color: var(--ph-ink);
+  }
+  .field input::placeholder { color: #A39B89; }
+  .add button {
+    flex: none; padding: 0 .9em; border: 0; border-radius: 999px; cursor: pointer;
+    background: var(--ph-green); color: #fff; font: inherit; font-size: .78em; font-weight: 700;
+  }
+  .add button:focus-visible { outline-color: var(--ph-green); }
+
+  .toast {
+    position: absolute; left: 50%; bottom: 4.2em; transform: translate(-50%, 1em); opacity: 0;
+    padding: .5em .9em; border-radius: 999px; white-space: nowrap; pointer-events: none;
+    background: var(--ph-ink); color: #F5F0E6; font-size: .7em; font-weight: 700;
+    box-shadow: 0 8px 20px rgba(0,0,0,.25);
+  }
+  .toast.show { animation: toast 2.6s var(--ease-out) forwards; }
+  @keyframes toast {
+    0% { opacity: 0; transform: translate(-50%, 1em); }
+    12%, 82% { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, -.4em); }
+  }
+  .nudge {
+    position: absolute; left: .55em; right: .55em; top: .55em; z-index: 2;
+    display: flex; gap: .55em; align-items: center; padding: .6em .7em; border-radius: 1.1em;
+    background: rgba(255,255,255,.96); box-shadow: 0 10px 28px rgba(0,0,0,.22);
+    transform: translateY(-140%); transition: transform .6s var(--ease-out);
+  }
+  .nudge.show { transform: translateY(0); }
+  .nudge img { width: 2.1em; height: 2.1em; border-radius: .5em; flex: none; }
+  .nudge b { display: block; font-size: .66em; }
+  .nudge div > span { display: block; font-size: .68em; line-height: 1.3; color: #4A463F; }
+
+  /* The sync pulse: a dot that travels from whichever phone acted to the other one. */
+  .beam { position: absolute; left: 25%; right: 25%; top: 46%; height: 0; pointer-events: none; }
+  .beam i {
+    position: absolute; top: -6px; left: 0; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%;
+    background: var(--panel-accent); box-shadow: 0 0 0 6px rgba(143,203,147,.25), 0 0 24px 6px rgba(143,203,147,.6);
+    opacity: 0;
+  }
+  .beam.to-kai i { animation: beam .7s var(--ease-out); }
+  .beam.to-you i { animation: beam .7s var(--ease-out) reverse; }
+  @keyframes beam { 0% { left: 0; opacity: 0; } 15%, 80% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+
+  .demo-hint {
+    display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 26px; min-height: 44px;
+    font-size: 15px; font-weight: 600; color: var(--panel-sub); text-align: center;
+  }
+  .demo-hint .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--panel-accent); flex: none;
+    animation: blink 1.6s ease-in-out infinite;
+  }
+  @keyframes blink { 50% { opacity: .25; } }
+  .demo-hint a { color: var(--panel-accent); font-weight: 700; text-decoration: none; padding: 10px 4px; }
+  .demo-hint a:hover { text-decoration: underline; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  @media (max-width: 420px) {
+    .sync-demo { gap: 12px; }
+    .phone[data-phone="kai"] { margin-top: 28px; }
+    .phone-tag { font-size: 11.5px; gap: 6px; }
+    .demo-hint { font-size: 14px; }
   }
 
   /* ---- Pillars ---- */
@@ -142,9 +292,49 @@
         </div>
       </div>
       <div class="hero-shot">
-        <div class="float-card">
-          <img src="assets/lists-home.jpg" alt="ListNudge's Lists screen, showing shared and personal grocery lists" width="600" height="1304" fetchpriority="high">
+        <div class="sync-demo" data-sync-demo role="group" aria-label="Interactive demo: two phones sharing one ListNudge list">
+          <figure class="phone" data-phone="you">
+            <figcaption class="phone-tag"><span class="av">Y</span>Your phone · at home</figcaption>
+            <div class="screen">
+              <div class="status" aria-hidden="true">8:35</div>
+              <div class="lh">
+                <div class="lh-top" aria-hidden="true"><span class="lh-back">‹ Lists</span><span class="avs"><span class="av">Y</span><span class="av av-k">K</span></span></div>
+                <h2 class="lh-title"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 7H6"/></svg></span>Weekly Groceries</h2>
+                <p class="lh-count" data-count></p>
+              </div>
+              <ul class="items" data-items></ul>
+              <form class="add" data-add>
+                <span class="field"><input type="text" placeholder="Add an item…" maxlength="22" autocomplete="off" aria-label="Add an item from your phone"></span>
+                <button type="submit">Add</button>
+              </form>
+              <div class="toast" data-toast aria-hidden="true"></div>
+            </div>
+          </figure>
+          <figure class="phone" data-phone="kai">
+            <figcaption class="phone-tag"><span class="av av-k">K</span>Kai's phone · at the store</figcaption>
+            <div class="screen">
+              <div class="nudge" data-nudge aria-hidden="true">
+                <img src="assets/app-icon.png" alt="" width="192" height="192">
+                <div><b>ListNudge</b><span>You're near Green St Market — <span data-nudge-count></span> on Weekly Groceries.</span></div>
+              </div>
+              <div class="status" aria-hidden="true">8:35</div>
+              <div class="lh">
+                <div class="lh-top" aria-hidden="true"><span class="lh-back">‹ Lists</span><span class="avs"><span class="av">Y</span><span class="av av-k">K</span></span></div>
+                <h2 class="lh-title"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 7H6"/></svg></span>Weekly Groceries</h2>
+                <p class="lh-count" data-count></p>
+              </div>
+              <ul class="items" data-items></ul>
+              <form class="add" data-add>
+                <span class="field"><input type="text" placeholder="Add an item…" maxlength="22" autocomplete="off" aria-label="Add an item from Kai's phone"></span>
+                <button type="submit">Add</button>
+              </form>
+              <div class="toast" data-toast aria-hidden="true"></div>
+            </div>
+          </figure>
+          <div class="beam" data-beam aria-hidden="true"><i></i></div>
         </div>
+        <p class="demo-hint" data-hint><span class="dot" aria-hidden="true"></span>Try it — tap an item on either phone, or add one.</p>
+        <p class="sr-only" aria-live="polite" data-live></p>
       </div>
     </div>
   </div>
@@ -200,5 +390,250 @@
   <p>Questions or ideas? Email <a href="mailto:support@townsville.cc">support@townsville.cc</a></p>
   <p><a href="privacy.html">Privacy Policy</a></p>
 </footer>
+<script>
+/* Live sync demo. One shared list, rendered from each person's point of view on two phones:
+   whatever either phone does shows up on the other, with the app's own "Kai got it" wording.
+   It plays itself while on screen until the visitor touches it, then it's theirs. */
+(() => {
+  const demo = document.querySelector('[data-sync-demo]');
+  if (!demo) return;
+  const APP_STORE = document.querySelector('.badge-row a').href;
+  const phones = {
+    you: demo.querySelector('[data-phone="you"]'),
+    kai: demo.querySelector('[data-phone="kai"]'),
+  };
+  // What each phone calls each person: you are "you" on your own phone and "Yuna" on Kai's.
+  const label = { you: { you: 'you', kai: 'Kai' }, kai: { you: 'Yuna', kai: 'you' } };
+  const other = who => (who === 'you' ? 'kai' : 'you');
+  const beam = demo.querySelector('[data-beam]');
+  const hint = document.querySelector('[data-hint]');
+  const live = document.querySelector('[data-live]');
+  const nudge = demo.querySelector('[data-nudge]');
+
+  const CATS = ['Produce', 'Dairy & Eggs', 'Bakery', 'Pantry', 'Frozen', 'Household'];
+  // First match wins, so the more specific aisles go first ("ice cream" is Frozen, not Dairy).
+  const RULES = [
+    [/frozen|\bice\b|pizza|\bpeas\b|popsicle/i, 'Frozen'],
+    [/bread|loaf|bagel|\bbuns?\b|croissant|muffin|tortilla|baguette/i, 'Bakery'],
+    [/milk|eggs?\b|cheese|yog(h)?urt|butter|cream|kefir/i, 'Dairy & Eggs'],
+    [/banana|apple|spinach|lettuce|tomato|onion|potato|avocado|berr|lemon|lime|carrot|pepper|grape|orange|fruit|kale|garlic|cucumber|herb|basil|mango|pear|peach|broccoli/i, 'Produce'],
+    [/soap|paper|towel|tissue|detergent|sponge|trash|toothpaste|shampoo|foil|wrap|batter(y|ies)|bulb/i, 'Household'],
+  ];
+  const aisle = name => (RULES.find(([re]) => re.test(name)) || [, 'Pantry'])[1];
+
+  const seed = () => [
+    { id: 1, name: 'Bananas', qty: '×6', cat: 'Produce', by: 'you', got: null },
+    { id: 2, name: 'Spinach', cat: 'Produce', by: 'kai', got: null },
+    { id: 3, name: 'Milk', cat: 'Dairy & Eggs', by: 'you', got: null },
+    { id: 4, name: 'Eggs', qty: '×12', cat: 'Dairy & Eggs', by: 'you', got: null },
+    { id: 5, name: 'Sourdough loaf', cat: 'Bakery', by: 'kai', got: null },
+  ];
+  let items = seed();
+  let nextId = 6;
+
+  const make = (tag, cls, text) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  };
+
+  function render(viewer, freshId) {
+    const phone = phones[viewer];
+    const list = phone.querySelector('[data-items]');
+    const scroll = list.scrollTop;
+    list.replaceChildren();
+    for (const cat of CATS) {
+      const group = items.filter(i => i.cat === cat);
+      if (!group.length) continue;
+      list.append(make('li', 'cat', cat));
+      for (const it of group) {
+        const li = make('li', 'item' + (it.got ? ' done' : '') + (it.id === freshId ? ' flash' : ''));
+        const row = make('button', 'row');
+        row.type = 'button';
+        row.dataset.id = it.id;
+        row.setAttribute('aria-pressed', String(!!it.got));
+        const txt = make('span', 'txt');
+        const nm = make('span', 'nm', it.name);
+        if (it.qty) nm.append(make('span', 'qty', it.qty));
+        const meta = it.got
+          ? (it.got === viewer ? 'You got it' : `${label[viewer][it.got]} got it`)
+          : `added by ${label[viewer][it.by]}`;
+        txt.append(nm, make('span', 'meta', meta));
+        row.append(make('span', 'tick'), txt);
+        li.append(row);
+        list.append(li);
+      }
+    }
+    list.scrollTop = scroll;
+    const left = items.filter(i => !i.got).length;
+    phone.querySelector('[data-count]').textContent = `${left} of ${items.length} to buy`;
+    if (freshId) {
+      const n = list.querySelector(`[data-id="${freshId}"]`);
+      if (n) list.scrollTop = Math.max(0, n.offsetTop - list.clientHeight / 2);
+    }
+  }
+  const renderAll = () => { render('you'); render('kai'); syncNudge(); };
+
+  function syncNudge() {
+    const left = items.filter(i => !i.got).length;
+    demo.querySelector('[data-nudge-count]').textContent = `${left} item${left === 1 ? '' : 's'}`;
+  }
+
+  // Restart a CSS animation by toggling its class across a reflow.
+  function replay(node, cls) {
+    node.classList.remove(cls);
+    void node.offsetWidth;
+    node.classList.add(cls);
+  }
+
+  function broadcast(actor, id, toastText, spoken) {
+    const to = other(actor);
+    render(actor);
+    render(to, id);
+    syncNudge();
+    beam.classList.remove('to-kai', 'to-you');
+    replay(beam, `to-${to}`);
+    const toast = phones[to].querySelector('[data-toast]');
+    toast.textContent = toastText;
+    replay(toast, 'show');
+    // Only narrate the visitor's own actions; the autoplay would talk over everything.
+    if (!auto) live.textContent = spoken;
+  }
+
+  function toggle(id, actor) {
+    const it = items.find(i => i.id === id);
+    if (!it) return;
+    it.got = it.got ? null : actor;
+    const to = other(actor);
+    const who = label[to][actor];
+    const Who = who[0].toUpperCase() + who.slice(1);
+    broadcast(actor, id,
+      it.got ? `✓ ${Who} got ${it.name}` : `${Who} unchecked ${it.name}`,
+      `${it.got ? 'Checked off' : 'Unchecked'} ${it.name} on ${actor === 'you' ? 'your' : "Kai's"} phone. It updated on ${to === 'you' ? 'yours' : "Kai's"} instantly.`);
+  }
+
+  function add(name, actor) {
+    name = name.trim().replace(/\s+/g, ' ');
+    if (!name) return;
+    name = name[0].toUpperCase() + name.slice(1);
+    const it = { id: nextId++, name, cat: aisle(name), by: actor, got: null };
+    items.push(it);
+    const to = other(actor);
+    const who = label[to][actor];
+    broadcast(actor, it.id,
+      `${who[0].toUpperCase() + who.slice(1)} added ${name}`,
+      `Added ${name}. It sorted itself into ${it.cat} and appeared on ${to === 'you' ? 'your' : "Kai's"} phone.`);
+    const n = phones[actor].querySelector(`[data-id="${it.id}"]`);
+    const list = phones[actor].querySelector('[data-items]');
+    if (n) list.scrollTop = Math.max(0, n.offsetTop - list.clientHeight / 2);
+  }
+
+  // ---- Visitor interaction ----
+  let touches = 0;
+  function engaged() {
+    stopAuto();
+    if (++touches === 2) {
+      hint.replaceChildren(
+        make('span', null, 'That’s the whole idea.'),
+        Object.assign(make('a', null, 'Get ListNudge on the App Store →'), { href: APP_STORE }),
+      );
+    }
+  }
+  for (const who of ['you', 'kai']) {
+    const phone = phones[who];
+    phone.querySelector('[data-items]').addEventListener('click', e => {
+      const row = e.target.closest('.row');
+      if (!row) return;
+      engaged();
+      toggle(Number(row.dataset.id), who);
+    });
+    phone.querySelector('[data-add]').addEventListener('submit', e => {
+      e.preventDefault();
+      const input = e.target.querySelector('input');
+      if (!input.value.trim()) return;
+      engaged();
+      add(input.value, who);
+      input.value = '';
+    });
+    phone.querySelector('input').addEventListener('focus', stopAuto);
+  }
+
+  // Keep the real 16px input scaled to the phone's type size (see .field input).
+  const fit = new ResizeObserver(entries => {
+    for (const { target } of entries) {
+      const px = parseFloat(getComputedStyle(target).fontSize) * .78;
+      target.querySelector('input').style.setProperty('--s', (px / 16).toFixed(3));
+    }
+  });
+  demo.querySelectorAll('.screen').forEach(s => fit.observe(s));
+
+  // ---- Autoplay: a short story that loops while visible, until the visitor takes over ----
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let auto = !calm;
+  let visible = false;
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: .35 }).observe(demo);
+  function stopAuto() {
+    if (!auto) return;
+    auto = false;
+    const field = phones.you.querySelector('.field');
+    field.classList.remove('typing');
+    if (document.activeElement !== field.firstElementChild) field.firstElementChild.value = '';
+    nudge.classList.remove('show');
+  }
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  // Waits ms of *visible* time; resolves false if the visitor took over meanwhile.
+  async function beat(ms) {
+    for (let t = 0; t < ms; t += 100) {
+      if (!auto) return false;
+      if (!visible) t -= 100;
+      await sleep(100);
+    }
+    return auto;
+  }
+  async function type(text) {
+    const field = phones.you.querySelector('.field');
+    const input = field.firstElementChild;
+    field.classList.add('typing');
+    for (const ch of text) {
+      if (!(await beat(90))) return false;
+      input.value += ch;
+    }
+    if (!(await beat(450))) return false;
+    field.classList.remove('typing');
+    input.value = '';
+    add(text, 'you');
+    return true;
+  }
+  const byName = name => items.find(i => i.name === name).id;
+  async function story() {
+    while (auto) {
+      if (!(await beat(1200))) return;
+      syncNudge();
+      nudge.classList.add('show');
+      if (!(await beat(2600))) return;
+      nudge.classList.remove('show');
+      if (!(await beat(900))) return;
+      toggle(byName('Milk'), 'kai');
+      if (!(await beat(2200))) return;
+      if (!(await type('Oat milk'))) return;
+      if (!(await beat(2200))) return;
+      toggle(byName('Bananas'), 'kai');
+      if (!(await beat(1600))) return;
+      toggle(byName('Oat milk'), 'kai');
+      if (!(await beat(4200))) return;
+      items = seed();
+      renderAll();
+    }
+  }
+
+  if (calm) {
+    // No motion: show the end state of the story so the idea still reads at a glance.
+    items[2].got = 'kai';
+  }
+  renderAll();
+  if (auto) story();
+})();
+</script>
 </body>
 </html>
